@@ -9,6 +9,7 @@ BEGIN
 	SET @future_month = DATE_ADD(CURDATE(), INTERVAL 1 MONTH);
 	SET @future_1st_of_month = CONCAT(YEAR(@future_month),'-', MONTH(@future_month),'-1');	
 	SET @prev_month = DATE_FORMAT(DATE_SUB(@future_1st_of_month, INTERVAL 1 DAY), '%Y-%m');
+	SET @current_month = DATE_FORMAT(CURDATE(), '%Y-%m');	
 	
 #	select @prev_month,@future_1st_of_month, @future_month;
 
@@ -61,7 +62,17 @@ BEGIN
 		FROM swm_monthly_trends_trad tt
 		WHERE tt.Group = tmp.Group
 		AND tt.MY = tmp.MY);
-	
+
+	IF (SELECT COUNT(1) FROM swm_monthly_trends_trad WHERE `Group` = 'Incoming' AND MY = @current_month) = 0 THEN
+		INSERT INTO swm_monthly_trends_trad
+		SELECT 'Incoming',@current_month,0;
+	END IF;
+
+	IF (SELECT COUNT(1) FROM swm_monthly_trends_trad WHERE `Group` = 'Closed' AND MY = @current_month) = 0 THEN
+		INSERT INTO swm_monthly_trends_trad
+		SELECT 'Closed',@current_month,0;
+	END IF;	
+		
 	UPDATE swm_monthly_trends_trad tt
 	INNER JOIN temp_swm_monthly_trends_trad tmp
 		ON tmp.Group = tt.Group
