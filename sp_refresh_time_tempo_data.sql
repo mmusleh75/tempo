@@ -127,7 +127,7 @@ BEGIN
 	AND `Work Date` > '2016-03-10';
 	
 	DELETE FROM jiraanalysis.tmp_tempo_data
-	WHERE Username IN ('fouma')
+	WHERE Username IN ('fouma','mmorrison')
 	AND `Work Date` >= '2016-11-01';
 
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-01' WHERE `Work Date` BETWEEN '2015-12-31 00:00:00' AND '2016-01-13 23:59:59';
@@ -184,7 +184,15 @@ BEGIN
 	INNER JOIN jiraanalysis.LT8Hrs h
 		ON h.`Username` = d.`Username`
 		AND h.`Work Day` = d.`Work Day`
-	SET `LT8Hrs` = 1;	
+	SET `LT8Hrs` = 1;
+	
+	UPDATE jiraanalysis.tmp_tempo_data
+	SET bugcategory = 'Not Assigned'
+	WHERE bugcategory IS NULL;
+
+	UPDATE jiraanalysis.tmp_tempo_data
+	SET bugcategory = 'Not Assigned'
+	WHERE TRIM(bugcategory) = '';
 
 	DROP TABLE IF EXISTS jiraanalysis.tempo_data_no_sprint;
 	
