@@ -13,23 +13,25 @@ BEGIN
 	
 #	select @prev_month,@future_1st_of_month, @future_month;
 
-	CALL sp_swm_tickets_traditional();
-
+	CALL sp_tickets_all_products_processor();
+	
 	TRUNCATE temp_swm_monthly_trends_trad;
 	
 	INSERT INTO temp_swm_monthly_trends_trad
 	SELECT 'Incoming', DATE_FORMAT(tt.CreateDate, '%Y-%m') AS MY, COUNT(1) AS cnt
-	FROM jiraanalysis.temp_swm_tickets_traditional tt
-	WHERE tt.Product NOT IN ('NHA','Secure Connect')
-	AND tt.CreateDate >= '2016-01-01'
+	FROM jiraanalysis.temp_tickets_all_products_processor tt
+	WHERE tt.CreateDate >= '2016-01-01'
+	AND pkey = 'PLS'
+	AND IssueType = 'SWM: Software Maintenance'
 	GROUP BY DATE_FORMAT(tt.CreateDate, '%Y-%m');
 
 	INSERT INTO temp_swm_monthly_trends_trad
 	SELECT 'Closed', DATE_FORMAT(ResolvedDate, '%Y-%m') AS MY, COUNT(1) AS cnt
-	FROM jiraanalysis.temp_swm_tickets_traditional
-	WHERE Product NOT IN ('NHA','Secure Connect')
-	AND ResolvedDate >= '2016-01-01'		
+	FROM jiraanalysis.temp_tickets_all_products_processor
+	WHERE ResolvedDate >= '2016-01-01'		
 	AND `Status` = 'Closed'
+	AND pkey = 'PLS'
+	AND IssueType = 'SWM: Software Maintenance'
 #	and ResolvedDate is not null
 	GROUP BY DATE_FORMAT(ResolvedDate, '%Y-%m');
 
@@ -38,17 +40,19 @@ BEGIN
 	SELECT Backlog,@prev_month, SUM(t.cnt)
 	FROM (
 		SELECT 'Backlog' AS Backlog, COUNT(1) AS cnt
-		FROM jiraanalysis.temp_swm_tickets_traditional
+		FROM jiraanalysis.temp_tickets_all_products_processor
 		WHERE STATUS != 'Closed'
-		AND product NOT IN ('NHA','Secure Connect')
 		AND CreateDate < @future_1st_of_month
+		AND pkey = 'PLS'
+		AND IssueType = 'SWM: Software Maintenance'		
 		GROUP BY `Backlog`
 		UNION ALL
 		SELECT 'Backlog' AS Backlog, COUNT(1) AS cnt
-		FROM jiraanalysis.temp_swm_tickets_traditional
+		FROM jiraanalysis.temp_tickets_all_products_processor
 		WHERE ResolvedDate >= @future_1st_of_month
-		AND product NOT IN ('NHA','Secure Connect')
 		AND CreateDate < @future_1st_of_month
+		AND pkey = 'PLS'
+		AND IssueType = 'SWM: Software Maintenance'		
 		GROUP BY `Backlog`
 		
 		) t

@@ -23,14 +23,12 @@ BEGIN
 		SELECT `IssueType`, COUNT(1) AS cnt
 		FROM jiraanalysis.temp_pc
 		WHERE STATUS != 'Closed'
-		AND product NOT IN ('NHA','Secure Connect')
 		AND CreateDate < @future_1st_of_month
 		GROUP BY `IssueType`
 		UNION ALL
 		SELECT `IssueType`, COUNT(1) AS cnt
 		FROM jiraanalysis.temp_pc
 		WHERE ResolvedDate >= @future_1st_of_month
-		AND product NOT IN ('NHA','Secure Connect')
 		AND CreateDate < @future_1st_of_month
 		GROUP BY `IssueType`
 		

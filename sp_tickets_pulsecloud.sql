@@ -75,6 +75,10 @@ BEGIN
 	#and jira.created > CAST('2010-12-31' as datetime)
 	# AND jira.issuenum =22559
 	ORDER BY jira.created DESC;
+
+	DELETE FROM jiraanalysis.temp_pc 
+	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
+	;	
 	
 END$$
 

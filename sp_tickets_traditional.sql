@@ -74,6 +74,10 @@ BEGIN
 	AND jira.security IS NULL
 	ORDER BY jira.created DESC;
 	
+	DELETE FROM jiraanalysis.temp_traditional 
+	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
+	;
+	
 END$$
 
 DELIMITER ;

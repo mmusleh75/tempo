@@ -24,8 +24,26 @@ BEGIN
 	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10223 AND issue=ji.id) AS Product
 	,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
 	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =11406 AND issue=ji.id) AS BUGCategory	
-	,pv.vname AS `Fix Version` # multiple fix version per ticket generated dups in logged hrs
+#	,pv.vname AS `Fix Version` # multiple fix version per ticket generated dups in logged hrs
 --	,c.cname AS `Component` # multiple components per ticket generated dups in logged hrs
+	,(SELECT GROUP_CONCAT(pv.vname)
+	FROM jiradb.nodeassociation na
+	INNER JOIN jiradb.jiraissue j
+		ON j.id = na.source_node_id
+	INNER JOIN jiradb.projectversion pv
+		ON pv.id = na.sink_node_id
+	WHERE j.id = ji.id
+	AND na.association_type = 'IssueVersion'
+	GROUP BY j.id) AS AffectsVersion
+	,(SELECT GROUP_CONCAT(pv.vname)
+	FROM jiradb.nodeassociation na
+	INNER JOIN jiradb.jiraissue j
+		ON j.id = na.source_node_id
+	INNER JOIN jiradb.projectversion pv
+		ON pv.id = na.sink_node_id
+	WHERE j.id = ji.id
+	AND na.association_type = 'IssueFixVersion'
+	GROUP BY j.id) AS `Fix Version`	
 	,(SELECT cf.numbervalue FROM jiradb.customfieldvalue cf WHERE cf.customfield = 10002 AND cf.issue = ji.id) AS `Story Points`	
 	,pp.pkey AS `Epic Project Key`
 	,jp.issuenum AS `Epic Ticket`	
@@ -64,20 +82,20 @@ BEGIN
 		ON ist.id = ji.issuestatus
 	INNER JOIN jiradb.project p 
 		ON p.id = ji.project
-
+/*
 	LEFT JOIN jiradb.nodeassociation na
 		ON ji.id = na.SOURCE_NODE_ID
 		AND na.ASSOCIATION_TYPE = 'IssueFixVersion'
 	LEFT JOIN jiradb.projectversion pv
 		ON na.SINK_NODE_ID = pv.id
-/*
+
 	LEFT JOIN jiradb.nodeassociation cna
 		ON ji.id = cna.SOURCE_NODE_ID
 		AND cna.ASSOCIATION_TYPE = 'IssueComponent'
 	LEFT JOIN jiradb.component c
 		ON cna.SINK_NODE_ID = c.id
 */
-
+	WHERE p.pkey = 'VTEN'
 	;
 
 	

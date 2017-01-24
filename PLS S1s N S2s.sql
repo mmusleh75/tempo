@@ -4,6 +4,8 @@ SELECT DISTINCT
 j.id
 ,j.issuenum AS jira
 ,j.created
+,j.Resolutiondate AS ResolvedDate
+,j.issuestatus
 ,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
 INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10217 AND issue=j.id) AS Severity
 FROM jiradb.jiraissue j
@@ -22,12 +24,23 @@ DELETE FROM jiraanalysis.mhm_all_pls WHERE Severity LIKE 'N/A';
 
 SELECT Severity, COUNT(1) FROM jiraanalysis.mhm_all_pls GROUP BY Severity;
 
+-- should've been counted as of 10/31
+SELECT *
+FROM jiraanalysis.mhm_all_pls
+WHERE ResolvedDate > '2016-10-31'
+;
 
+SELECT ji.*, ist.pname
+FROM jiraanalysis.mhm_all_pls ji
+INNER JOIN jiradb.issuestatus ist
+	ON ist.id = ji.issuestatus
+WHERE ist.pname != 'Closed'
+#ResolvedDate > '2016-10-31'
+;
+
+SELECT * FROM jiradb.issuestatus
 
 SELECT DISTINCT j.jira
-#,ci.oldstring
-#,ci.newstring
-#,cg.*
 ,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
 INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10217 AND issue=j.id) AS Severity
 FROM jiraanalysis.mhm_all_pls j
@@ -44,7 +57,9 @@ INNER JOIN jiradb.issuestatus ist
 	*/
 
 WHERE ci.Field = 'status'
-AND j.jira IN ('12683', '12958','27116','25929','28549')
+#and ci.newstring = 'Closed'
+AND j.ResolvedDate > '2016-10-31'
+#AND j.jira IN ('12683', '12958','27116','25929','28549')
 ;
 
 SELECT DISTINCT FIELD FROM jiradb.changeitem WHERE FIELD LIKE '%Status%';

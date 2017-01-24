@@ -114,7 +114,7 @@ BEGIN
 	LEFT JOIN jiradb.component c
 		ON cna.SINK_NODE_ID = c.id
 */
-	WHERE wl.startdate >= '2016-01-01'
+	WHERE wl.startdate >= '2017-01-01'
 	#and wl.startdate <= '2016-01-12'
 	AND u.display_name != 'Singh, Jagmit' 	-- keep this
 	#AND ji.issuenum = '26159'
@@ -128,8 +128,8 @@ BEGIN
 	
 	DELETE FROM jiraanalysis.tmp_tempo_data
 	WHERE Username IN ('fouma','mmorrison')
-	AND `Work Date` >= '2016-11-01';
-
+	AND `Work Date` >= '2017-11-01';
+/*
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-01' WHERE `Work Date` BETWEEN '2015-12-31 00:00:00' AND '2016-01-13 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-02' WHERE `Work Date` BETWEEN '2016-01-14 00:00:00' AND '2016-01-27 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-03' WHERE `Work Date` BETWEEN '2016-01-28 00:00:00' AND '2016-02-10 23:59:59';
@@ -156,7 +156,36 @@ BEGIN
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-24' WHERE `Work Date` BETWEEN '2016-11-17 00:00:00' AND '2016-11-30 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-25' WHERE `Work Date` BETWEEN '2016-12-01 00:00:00' AND '2016-12-14 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-26' WHERE `Work Date` BETWEEN '2016-12-15 00:00:00' AND '2016-12-28 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-27' WHERE `Work Date` BETWEEN '2016-12-29 00:00:00' AND '2017-01-11 23:59:59';
+*/
+
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-01' WHERE `Work Date` BETWEEN '2016-12-29 00:00:00' AND '2017-01-11 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-02' WHERE `Work Date` BETWEEN '2017-01-12 00:00:00' AND '2017-01-25 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-03' WHERE `Work Date` BETWEEN '2017-01-26 00:00:00' AND '2017-02-08 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-04' WHERE `Work Date` BETWEEN '2017-02-09 00:00:00' AND '2017-02-22 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-05' WHERE `Work Date` BETWEEN '2017-02-23 00:00:00' AND '2017-03-08 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-06' WHERE `Work Date` BETWEEN '2017-03-09 00:00:00' AND '2017-03-22 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-07' WHERE `Work Date` BETWEEN '2017-03-23 00:00:00' AND '2017-04-05 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-08' WHERE `Work Date` BETWEEN '2017-04-06 00:00:00' AND '2017-04-19 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-09' WHERE `Work Date` BETWEEN '2017-04-20 00:00:00' AND '2017-05-03 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-10' WHERE `Work Date` BETWEEN '2017-05-04 00:00:00' AND '2017-05-17 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-11' WHERE `Work Date` BETWEEN '2017-05-18 00:00:00' AND '2017-05-31 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-12' WHERE `Work Date` BETWEEN '2017-06-01 00:00:00' AND '2017-06-14 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-13' WHERE `Work Date` BETWEEN '2017-06-15 00:00:00' AND '2017-06-28 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-14' WHERE `Work Date` BETWEEN '2017-06-29 00:00:00' AND '2017-07-12 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-15' WHERE `Work Date` BETWEEN '2017-07-13 00:00:00' AND '2017-07-26 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-16' WHERE `Work Date` BETWEEN '2017-07-27 00:00:00' AND '2017-08-09 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-17' WHERE `Work Date` BETWEEN '2017-08-10 00:00:00' AND '2017-08-23 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-18' WHERE `Work Date` BETWEEN '2017-08-24 00:00:00' AND '2017-09-06 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-19' WHERE `Work Date` BETWEEN '2017-09-07 00:00:00' AND '2017-09-20 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-20' WHERE `Work Date` BETWEEN '2017-09-21 00:00:00' AND '2017-10-04 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-21' WHERE `Work Date` BETWEEN '2017-10-05 00:00:00' AND '2017-10-18 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-22' WHERE `Work Date` BETWEEN '2017-10-19 00:00:00' AND '2017-11-01 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-23' WHERE `Work Date` BETWEEN '2017-11-02 00:00:00' AND '2017-11-15 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-24' WHERE `Work Date` BETWEEN '2017-11-16 00:00:00' AND '2017-11-29 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-25' WHERE `Work Date` BETWEEN '2017-11-30 00:00:00' AND '2017-12-13 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-26' WHERE `Work Date` BETWEEN '2017-12-14 00:00:00' AND '2017-12-27 23:59:59';
+	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '18-01' WHERE `Work Date` BETWEEN '2017-12-28 00:00:00' AND '2018-01-10 23:59:59';
+
 	
 	UPDATE jiraanalysis.tmp_tempo_data SET `Days Lag` = DATEDIFF(`Created Date`, `Work Date`);
 
@@ -193,6 +222,14 @@ BEGIN
 	UPDATE jiraanalysis.tmp_tempo_data
 	SET bugcategory = 'Not Assigned'
 	WHERE TRIM(bugcategory) = '';
+
+	UPDATE jiraanalysis.tmp_tempo_data
+	SET `Issue Number` = 31
+		,`Issue summary` = 'PTO 2017'
+	WHERE `Created Date` <= '2016-12-31'
+	AND `Work Date` >= '2017-01-01'
+	AND `Project Key` = 'IN'
+	AND `Issue Number` = 5;
 
 	DROP TABLE IF EXISTS jiraanalysis.tempo_data_no_sprint;
 	
