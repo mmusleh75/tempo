@@ -124,11 +124,16 @@ BEGIN
 
 	DELETE FROM jiraanalysis.tmp_tempo_data
 	WHERE Username IN ('dplatt','jcummins','jisaac','jsellens','mhorton')
-	AND `Work Date` > '2016-03-10';
+	AND `Work Date` > '2016-03-10';  -- DO NOT CHANGE THE YEAR
 	
 	DELETE FROM jiraanalysis.tmp_tempo_data
 	WHERE Username IN ('fouma','mmorrison')
-	AND `Work Date` >= '2017-11-01';
+	AND `Work Date` >= '2016-11-01'; -- DO NOT CHANGE THE YEAR
+
+	DELETE FROM jiraanalysis.tmp_tempo_data
+	WHERE Username IN ('sfarha','kbartholomae')
+	AND `Work Date` >= '2017-01-01' -- DO NOT CHANGE THE YEAR
+	AND `Project Key` != 'TM';
 /*
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-01' WHERE `Work Date` BETWEEN '2015-12-31 00:00:00' AND '2016-01-13 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-02' WHERE `Work Date` BETWEEN '2016-01-14 00:00:00' AND '2016-01-27 23:59:59';
