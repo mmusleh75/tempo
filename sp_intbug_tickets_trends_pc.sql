@@ -24,6 +24,7 @@ BEGIN
 	FROM jiraanalysis.temp_tickets_all_products_processor tt
 	WHERE tt.CreateDate >= '2017-01-01'
 	AND pkey = 'VTEN'
+	AND Product = 'PulseCloud'
 	AND IssueType = 'BUG: Internal Defect'
 	GROUP BY DATE_FORMAT(tt.CreateDate, '%Y-%m');
 
@@ -33,6 +34,7 @@ BEGIN
 	WHERE ResolvedDate >= '2017-01-01'		
 	AND `Status` = 'Closed'
 	AND pkey = 'VTEN'
+	AND Product = 'PulseCloud'
 	AND IssueType = 'BUG: Internal Defect'
 #	and ResolvedDate is not null
 	GROUP BY DATE_FORMAT(ResolvedDate, '%Y-%m');
@@ -46,6 +48,7 @@ BEGIN
 		WHERE STATUS != 'Closed'
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'
 		AND IssueType = 'BUG: Internal Defect'	
 		GROUP BY `Backlog`
 		UNION ALL
@@ -54,6 +57,7 @@ BEGIN
 		WHERE ResolvedDate >= @future_1st_of_month
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'
 		AND IssueType = 'BUG: Internal Defect'			
 		GROUP BY `Backlog`
 		

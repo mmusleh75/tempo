@@ -43,6 +43,7 @@ BEGIN
 		WHERE STATUS != 'Closed'
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'		
 		AND IssueType = 'BUG: Internal Defect'		
 		GROUP BY Severity
 		UNION ALL
@@ -51,6 +52,7 @@ BEGIN
 		WHERE ResolvedDate >= @future_1st_of_month
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'
 		AND IssueType = 'BUG: Internal Defect'
 		GROUP BY Severity
 		

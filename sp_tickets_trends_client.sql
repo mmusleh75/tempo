@@ -28,6 +28,9 @@ BEGIN
 	CALL sp_intbug_sev_tickets_trends_traditional();
 	CALL sp_intbug_sev_tickets_trends_pc();
 	
+	CALL sp_swm_int_tickets_trends_nonPLSPC();	
+#	CALL sp_swm_int_sev_tickets_trends_nonPLSPC();
+	
 	CALL sp_refresh_pc_release_data();
 
 END$$

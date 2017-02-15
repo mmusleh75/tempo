@@ -77,7 +77,7 @@ BEGIN
 	ORDER BY jira.created DESC;
 
 	DELETE FROM jiraanalysis.temp_pc 
-	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
+	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal', 'Medrium')
 	;	
 	
 END$$

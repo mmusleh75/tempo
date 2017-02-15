@@ -65,6 +65,11 @@ BEGIN
 	AND jira.security IS NULL
 	ORDER BY jira.created DESC;
 
+	DROP TABLE IF EXISTS jiraanalysis.temp_tickets_all_nonPLSPC_products;
+	
+	CREATE TABLE jiraanalysis.temp_tickets_all_nonPLSPC_products
+	SELECT * FROM jiraanalysis.temp_tickets_all_products_processor;
+	
 	DELETE FROM jiraanalysis.temp_tickets_all_products_processor 
 	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
 	;

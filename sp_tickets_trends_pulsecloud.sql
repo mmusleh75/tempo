@@ -17,6 +17,8 @@ BEGIN
 
 	TRUNCATE temp_monthly_trends_pc;
 	
+	DELETE FROM jiraanalysis.temp_pc WHERE Product = 'Medrium';
+	
 	INSERT INTO temp_monthly_trends_pc
 	SELECT @prev_month, t.IssueType, SUM(t.cnt)
 	FROM (

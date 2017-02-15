@@ -23,6 +23,7 @@ BEGIN
 	FROM jiraanalysis.temp_tickets_all_products_processor tt
 	WHERE tt.CreateDate >= '2016-01-01'
 	AND pkey = 'VTEN'
+	AND Product = 'PulseCloud'	
 	AND IssueType = 'SWM: Software Maintenance'	
 	GROUP BY DATE_FORMAT(tt.CreateDate, '%Y-%m');
 
@@ -32,6 +33,7 @@ BEGIN
 	WHERE ResolvedDate >= '2016-01-01'		
 	AND `Status` = 'Closed'
 	AND pkey = 'VTEN'
+	AND Product = 'PulseCloud'
 	AND IssueType = 'SWM: Software Maintenance'		
 #	and ResolvedDate is not null
 	GROUP BY DATE_FORMAT(ResolvedDate, '%Y-%m');
@@ -45,6 +47,7 @@ BEGIN
 		WHERE STATUS != 'Closed'
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'
 		AND IssueType = 'SWM: Software Maintenance'			
 		GROUP BY `Backlog`
 		UNION ALL
@@ -53,6 +56,7 @@ BEGIN
 		WHERE ResolvedDate >= @future_1st_of_month
 		AND CreateDate < @future_1st_of_month
 		AND pkey = 'VTEN'
+		AND Product = 'PulseCloud'		
 		AND IssueType = 'SWM: Software Maintenance'					
 		GROUP BY `Backlog`
 		
@@ -85,7 +89,7 @@ BEGIN
 		AND tmp.MY = tt.MY
 	SET tt.IssueCount = tmp.IssueCount;
 	
-#	SELECT * FROM jiraanalysis.swm_monthly_trends_pc where dateconcat(MY,'01') < '2017-02-01';
+#	SELECT * FROM jiraanalysis.swm_monthly_trends_pc;
 	
 END$$
 
