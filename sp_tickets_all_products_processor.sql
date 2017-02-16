@@ -10,8 +10,8 @@ BEGIN
 	CREATE TABLE temp_tickets_all_products_processor
 	SELECT
 	jira.issuenum AS IssueID
-	,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
-	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10217 AND issue=jira.id) AS Severity
+	,IFNULL((SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
+	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10217 AND issue=jira.id),'n/a') AS Severity
 	,(SELECT b.stringvalue 
 		FROM jiradb.customfieldvalue b 
 		WHERE b.customfield =10208 AND issue=jira.id) AS PivotalIDs
