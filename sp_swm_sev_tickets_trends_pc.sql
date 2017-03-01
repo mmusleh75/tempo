@@ -10,7 +10,8 @@ BEGIN
 	SET @future_1st_of_month = CONCAT(YEAR(@future_month),'-', MONTH(@future_month),'-1');	
 	SET @prev_month = DATE_FORMAT(DATE_SUB(@future_1st_of_month, INTERVAL 1 DAY), '%Y-%m');
 	SET @current_month = DATE_FORMAT(CURDATE(), '%Y-%m');
-	
+	SET @old_month = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 13 MONTH), '%Y-%m');	
+		
 #	select @future_month, @future_1st_of_month, @prev_month, @current_month;
 
 	CALL sp_tickets_all_products_processor();
@@ -93,7 +94,19 @@ BEGIN
 		ON tmp.Severity = tt.Severity
 		AND tmp.MY = tt.MY
 	SET tt.IssueCount = tmp.IssueCount;
-	
+
+	INSERT INTO swm_sev_monthly_trends_pc_archive
+	SELECT m.* FROM swm_sev_monthly_trends_pc m
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM swm_sev_monthly_trends_pc_archive a
+		WHERE a.Severity = m.Severity
+		AND a.MY = m.MY)
+	AND m.MY = @old_month;	
+
+	DELETE FROM swm_sev_monthly_trends_pc 
+	WHERE MY = @old_month;	
+		
 #	SELECT * FROM jiraanalysis.swm_sev_monthly_trends_pc;	
 	
 END$$

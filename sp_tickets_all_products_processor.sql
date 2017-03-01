@@ -61,7 +61,7 @@ BEGIN
 	INNER JOIN jiradb.issuestatus iss ON iss.id = jira.issuestatus
 	INNER JOIN jiradb.project p ON jira.project = p.id 
 	WHERE jira.issuetype IN (10110, 1) # 10110: SWM, 1: Internal Bug 
-	AND jira.PROJECT IN (10101, 10701) # 10101: Pulse Systems Project, 10701: PulseCloud
+	AND jira.PROJECT IN (10101, 10701, 10724) # 10101: Pulse Systems Project (PLS), 10701: PulseCloud (VTEN), 10724: Mobile and Portal (MPM)
 	AND jira.security IS NULL
 	ORDER BY jira.created DESC;
 
@@ -71,7 +71,7 @@ BEGIN
 	SELECT * FROM jiraanalysis.temp_tickets_all_products_processor;
 	
 	DELETE FROM jiraanalysis.temp_tickets_all_products_processor 
-	WHERE product IN ('NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
+	WHERE Product IN ('Medrium','NHA','Secure Connect','Pulse Mobile','Pulse Patient Portal')
 	;
 
 END$$

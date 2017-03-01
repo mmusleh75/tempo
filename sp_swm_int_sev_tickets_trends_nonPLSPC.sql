@@ -232,11 +232,20 @@ BEGIN
 		AND tmp.MY = tt.MY
 	SET tt.IssueCount = tmp.IssueCount;
 
-/*	
+	INSERT INTO swm_int_sev_monthly_trends_nonPLSPC_archive
+	SELECT m.* FROM swm_int_sev_monthly_trends_nonPLSPC m
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM swm_int_sev_monthly_trends_nonPLSPC_archive a
+		WHERE a.Severity = m.Severity
+		AND a.Product = m.Product
+		AND a.IssueType = m.IssueType
+		AND a.MY = m.MY)
+	AND m.MY = @old_month;
+
 	DELETE FROM swm_int_sev_monthly_trends_nonPLSPC
 	WHERE MY = @old_month;
-*/
-		
+
 #	SELECT * FROM jiraanalysis.swm_int_sev_monthly_trends_nonPLSPC;	
 	
 END$$
