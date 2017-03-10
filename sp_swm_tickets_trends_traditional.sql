@@ -12,7 +12,7 @@ BEGIN
 	SET @current_month = DATE_FORMAT(CURDATE(), '%Y-%m');	
 	SET @old_month = DATE_FORMAT(DATE_SUB(CURDATE(), INTERVAL 13 MONTH), '%Y-%m');	
 	
-#	select @prev_month,@future_1st_of_month, @future_month;
+#	select @old_month, @prev_month,@future_1st_of_month, @future_month;
 
 	CALL sp_tickets_all_products_processor();
 	
@@ -21,7 +21,8 @@ BEGIN
 	INSERT INTO temp_swm_monthly_trends_trad
 	SELECT 'Incoming', DATE_FORMAT(tt.CreateDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_products_processor tt
-	WHERE tt.CreateDate >= '2016-01-01'
+	#WHERE tt.CreateDate >= '2016-01-01'
+	WHERE tt.CreateDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()
 	AND pkey = 'PLS'
 	AND IssueType = 'SWM: Software Maintenance'
 	GROUP BY DATE_FORMAT(tt.CreateDate, '%Y-%m');
@@ -29,7 +30,8 @@ BEGIN
 	INSERT INTO temp_swm_monthly_trends_trad
 	SELECT 'Closed', DATE_FORMAT(ResolvedDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_products_processor
-	WHERE ResolvedDate >= '2016-01-01'		
+	#WHERE ResolvedDate >= '2016-01-01'		
+	WHERE ResolvedDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()	
 	AND `Status` = 'Closed'
 	AND pkey = 'PLS'
 	AND IssueType = 'SWM: Software Maintenance'
@@ -96,8 +98,8 @@ BEGIN
 	DELETE FROM swm_monthly_trends_trad 
 	WHERE MY = @old_month;
 		
-#	SELECT * FROM jiraanalysis.swm_monthly_trends_trad;	
-#	select * from swm_monthly_trends_trad_archive;
+#	SELECT * FROM jiraanalysis.swm_monthly_trends_trad order by `Group`, MY;	
+#	select * from swm_monthly_trends_trad_archive  order by `Group`, MY;	
 	
 END$$
 

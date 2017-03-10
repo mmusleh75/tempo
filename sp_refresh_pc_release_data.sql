@@ -22,8 +22,9 @@ BEGIN
 	,ji.reporter AS `Reporter`	
 	,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
 	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =10223 AND issue=ji.id) AS Product
-	,(SELECT a.customvalue FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
-	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =11406 AND issue=ji.id) AS BUGCategory	
+	,(SELECT GROUP_CONCAT(a.customvalue) FROM jiradb.customfieldvalue b INNER JOIN jiradb.customfieldoption a ON b.stringvalue = a.id 
+	INNER JOIN jiradb.customfield ON b.customfield=customfield.ID WHERE b.customfield =11619 AND issue=ji.id
+	GROUP BY issue) AS BUGCategory	
 #	,pv.vname AS `Fix Version` # multiple fix version per ticket generated dups in logged hrs
 --	,c.cname AS `Component` # multiple components per ticket generated dups in logged hrs
 	,(SELECT GROUP_CONCAT(pv.vname)

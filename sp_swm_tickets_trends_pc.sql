@@ -23,7 +23,8 @@ BEGIN
 	INSERT INTO temp_swm_monthly_trends_pc
 	SELECT 'Incoming', DATE_FORMAT(tt.CreateDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_products_processor tt
-	WHERE tt.CreateDate >= '2016-01-01'
+	#WHERE tt.CreateDate >= '2016-01-01'
+	WHERE tt.CreateDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()	
 	AND pkey = 'VTEN'
 	AND Product = 'PulseCloud'	
 	AND IssueType = 'SWM: Software Maintenance'	
@@ -32,7 +33,8 @@ BEGIN
 	INSERT INTO temp_swm_monthly_trends_pc
 	SELECT 'Closed', DATE_FORMAT(ResolvedDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_products_processor
-	WHERE ResolvedDate >= '2016-01-01'		
+	#WHERE ResolvedDate >= '2016-01-01'	
+	WHERE ResolvedDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()
 	AND `Status` = 'Closed'
 	AND pkey = 'VTEN'
 	AND Product = 'PulseCloud'
@@ -103,7 +105,8 @@ BEGIN
 	DELETE FROM swm_monthly_trends_pc 
 	WHERE MY = @old_month;	
 		
-#	SELECT * FROM jiraanalysis.swm_monthly_trends_pc;
+#	SELECT * FROM jiraanalysis.swm_monthly_trends_pc order by `Group`, MY;	
+#	select * from swm_monthly_trends_pc_archive  order by `Group`, MY;	
 	
 END$$
 

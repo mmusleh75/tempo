@@ -24,14 +24,16 @@ BEGIN
 	INSERT INTO temp_swm_int_monthly_trends_nonPLSPC
 	SELECT 'Incoming', Product, IssueType, DATE_FORMAT(tt.CreateDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_nonPLSPC_products tt
-	WHERE tt.CreateDate >= '2016-01-01'
+	#WHERE tt.CreateDate >= '2016-01-01'
+	WHERE tt.CreateDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()		
 	AND IssueType IN ('SWM: Software Maintenance', 'BUG: Internal Defect')
 	GROUP BY Product, IssueType, DATE_FORMAT(tt.CreateDate, '%Y-%m');
 
 	INSERT INTO temp_swm_int_monthly_trends_nonPLSPC
 	SELECT 'Closed', Product, IssueType, DATE_FORMAT(ResolvedDate, '%Y-%m') AS MY, COUNT(1) AS cnt
 	FROM jiraanalysis.temp_tickets_all_nonPLSPC_products
-	WHERE ResolvedDate >= '2016-01-01'		
+	#WHERE ResolvedDate >= '2016-01-01'		
+	WHERE ResolvedDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 13 MONTH) AND CURDATE()		
 	AND `Status` = 'Closed'
 	AND IssueType IN ('SWM: Software Maintenance', 'BUG: Internal Defect')
 #	and ResolvedDate is not null
@@ -266,6 +268,10 @@ BEGIN
 	WHERE MY = @old_month;
 		
 #	SELECT * FROM jiraanalysis.swm_int_monthly_trends_nonPLSPC;	
+
+#	SELECT * FROM jiraanalysis.swm_int_monthly_trends_nonPLSPC order by `Group`, Product, IssueType, MY;	
+#       SELECT * FROM jiraanalysis.swm_int_monthly_trends_nonPLSPC where MY = '2016-01';
+#	select * from swm_int_monthly_trends_nonPLSPC_archive order by `Group`, Product, IssueType, MY;	
 	
 END$$
 
