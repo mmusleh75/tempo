@@ -7,7 +7,8 @@ INNER JOIN jiradb.customfieldvalue cf
 	ON cf.issue = j.id
 	AND cf.customfield = 10002
 INNER JOIN jiradb.project p 
-	ON j.project = p.id ;
+	ON j.project = p.id 
+;
 
 DROP TABLE IF EXISTS jiraanalysis.sprints_tmp;
 CREATE TABLE jiraanalysis.sprints_tmp
@@ -31,9 +32,16 @@ INNER JOIN jiraanalysis.sprints_tmp s
 	ON s.project_id = p.project_id
 	AND s.jira_id = p.jira_id
 WHERE s.name LIKE 'PC%'
-
 GROUP BY s.pkey, p.pname, s.name;
 	
+SELECT * FROM jiradb.AO_60DB71_SPRINT WHERE NAME = 'PCld-17-06';
+-- start: 1488997582254
+-- end: 1490203560000
+-- comp: 1490203105904
+
+SELECT ADDDATE(ADDDATE(ADDDATE('1899-12-31 00:00',1488997582254), INTERVAL -1 DAY), INTERVAL (MOD(1488997582254,1) * 86400) SECOND)
+
+SELECT ADDDATE(ADDDATE('1899-12-31 00:00',1488997582254), INTERVAL -1 DAY)
 
 SELECT *
 FROM jiradb.changeitem ci

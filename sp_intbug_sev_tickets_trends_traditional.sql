@@ -65,7 +65,27 @@ BEGIN
 	UPDATE temp_intbug_sev_monthly_trends_trad
 	SET Severity = 'n/a'
 	WHERE Severity IS NULL;
+
+	IF (SELECT COUNT(1) FROM temp_intbug_sev_monthly_trends_trad WHERE `Severity` = 'S1: Showstopper' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_intbug_sev_monthly_trends_trad
+		SELECT 'S1: Showstopper',@current_month,0;
+	END IF;
+
+	IF (SELECT COUNT(1) FROM temp_intbug_sev_monthly_trends_trad WHERE `Severity` = 'S2: Critical' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_intbug_sev_monthly_trends_trad
+		SELECT 'S2: Critical',@current_month,0;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_intbug_sev_monthly_trends_trad WHERE `Severity` = 'S3: Important' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_intbug_sev_monthly_trends_trad
+		SELECT 'S3: Important',@current_month,0;
+	END IF;	
 	
+	IF (SELECT COUNT(1) FROM temp_intbug_sev_monthly_trends_trad WHERE `Severity` = 'S4: Minor' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_intbug_sev_monthly_trends_trad
+		SELECT 'S4: Minor',@current_month,0;
+	END IF;	
+		
 	INSERT INTO intbug_sev_monthly_trends_trad
 	SELECT *
 	FROM temp_intbug_sev_monthly_trends_trad tmp
@@ -75,25 +95,6 @@ BEGIN
 		WHERE tt.Severity = tmp.Severity
 		AND tt.MY = tmp.MY);
 
-	IF (SELECT COUNT(1) FROM intbug_sev_monthly_trends_trad WHERE `Severity` = 'S1: Showstopper' AND MY = @current_month) = 0 THEN
-		INSERT INTO intbug_sev_monthly_trends_trad
-		SELECT 'S1: Showstopper',@current_month,0;
-	END IF;
-
-	IF (SELECT COUNT(1) FROM intbug_sev_monthly_trends_trad WHERE `Severity` = 'S2: Critical' AND MY = @current_month) = 0 THEN
-		INSERT INTO intbug_sev_monthly_trends_trad
-		SELECT 'S2: Critical',@current_month,0;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM intbug_sev_monthly_trends_trad WHERE `Severity` = 'S3: Important' AND MY = @current_month) = 0 THEN
-		INSERT INTO intbug_sev_monthly_trends_trad
-		SELECT 'S3: Important',@current_month,0;
-	END IF;	
-	
-	IF (SELECT COUNT(1) FROM intbug_sev_monthly_trends_trad WHERE `Severity` = 'S4: Minor' AND MY = @current_month) = 0 THEN
-		INSERT INTO intbug_sev_monthly_trends_trad
-		SELECT 'S4: Minor',@current_month,0;
-	END IF;	
 		
 	UPDATE intbug_sev_monthly_trends_trad tt
 	INNER JOIN temp_intbug_sev_monthly_trends_trad tmp

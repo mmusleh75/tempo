@@ -32,6 +32,10 @@ BEGIN
 	CALL sp_swm_int_sev_tickets_trends_nonPLSPC();
 	
 	CALL sp_refresh_pc_release_data();
+	
+	CALL sp_automation();
+	
+	CALL sp_new_fea_enh();
 
 END$$
 

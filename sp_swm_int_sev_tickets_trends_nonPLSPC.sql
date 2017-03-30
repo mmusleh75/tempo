@@ -39,7 +39,181 @@ BEGIN
 		GROUP BY Severity, Product, IssueType
 		) t
 	GROUP BY Severity, Product, IssueType;		
-	
+
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S1: Showstopper' 
+		AND Product = 'Medrium'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S1: Showstopper','Medrium','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S1: Showstopper' 
+		AND Product = 'NHA'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S1: Showstopper','NHA','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S1: Showstopper' 
+		AND Product = 'Pulse Mobile'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S1: Showstopper','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S1: Showstopper' 
+		AND Product = 'Pulse Patient Portal'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S1: Showstopper','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S1: Showstopper' 
+		AND Product = 'Secure Connect'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S1: Showstopper','Secure Connect','SWM: Software Maintenance', @current_month,0;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S2: Critical' 
+		AND Product = 'Medrium'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S2: Critical','Medrium','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S2: Critical' 
+		AND Product = 'NHA'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S2: Critical','NHA','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S2: Critical' 
+		AND Product = 'Pulse Mobile'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S2: Critical','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S2: Critical' 
+		AND Product = 'Pulse Patient Portal'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S2: Critical','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S2: Critical' 
+		AND Product = 'Secure Connect'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S2: Critical','Secure Connect','SWM: Software Maintenance', @current_month,0;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S3: Important' 
+		AND Product = 'Medrium'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S3: Important','Medrium','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S3: Important' 
+		AND Product = 'NHA'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S3: Important','NHA','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S3: Important' 
+		AND Product = 'Pulse Mobile'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S3: Important','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S3: Important' 
+		AND Product = 'Pulse Patient Portal'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S3: Important','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S3: Important' 
+		AND Product = 'Secure Connect'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S3: Important','Secure Connect','SWM: Software Maintenance', @current_month,0;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S4: Minor' 
+		AND Product = 'Medrium'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S4: Minor','Medrium','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S4: Minor' 
+		AND Product = 'NHA'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S4: Minor','NHA','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S4: Minor' 
+		AND Product = 'Pulse Mobile'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S4: Minor','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S4: Minor' 
+		AND Product = 'Pulse Patient Portal'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S4: Minor','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
+	END IF;		
+	IF (SELECT COUNT(1) FROM temp_swm_int_sev_monthly_trends_nonPLSPC 
+		WHERE `Severity` = 'S4: Minor' 
+		AND Product = 'Secure Connect'
+		AND IssueType = 'SWM: Software Maintenance'
+		AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_int_sev_monthly_trends_nonPLSPC
+		SELECT 'S4: Minor','Secure Connect','SWM: Software Maintenance', @current_month,0;
+	END IF;	
+
+		
 	INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
 	SELECT *
 	FROM temp_swm_int_sev_monthly_trends_nonPLSPC tmp
@@ -51,179 +225,6 @@ BEGIN
 		AND tt.IssueType = tmp.IssueType
 		AND tt.MY = tmp.MY);
 
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S1: Showstopper' 
-		AND Product = 'Medrium'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S1: Showstopper','Medrium','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S1: Showstopper' 
-		AND Product = 'NHA'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S1: Showstopper','NHA','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S1: Showstopper' 
-		AND Product = 'Pulse Mobile'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S1: Showstopper','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S1: Showstopper' 
-		AND Product = 'Pulse Patient Portal'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S1: Showstopper','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S1: Showstopper' 
-		AND Product = 'Secure Connect'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S1: Showstopper','Secure Connect','SWM: Software Maintenance', @current_month,0;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S2: Critical' 
-		AND Product = 'Medrium'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S2: Critical','Medrium','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S2: Critical' 
-		AND Product = 'NHA'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S2: Critical','NHA','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S2: Critical' 
-		AND Product = 'Pulse Mobile'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S2: Critical','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S2: Critical' 
-		AND Product = 'Pulse Patient Portal'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S2: Critical','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S2: Critical' 
-		AND Product = 'Secure Connect'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S2: Critical','Secure Connect','SWM: Software Maintenance', @current_month,0;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S3: Important' 
-		AND Product = 'Medrium'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S3: Important','Medrium','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S3: Important' 
-		AND Product = 'NHA'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S3: Important','NHA','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S3: Important' 
-		AND Product = 'Pulse Mobile'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S3: Important','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S3: Important' 
-		AND Product = 'Pulse Patient Portal'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S3: Important','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S3: Important' 
-		AND Product = 'Secure Connect'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S3: Important','Secure Connect','SWM: Software Maintenance', @current_month,0;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S4: Minor' 
-		AND Product = 'Medrium'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S4: Minor','Medrium','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S4: Minor' 
-		AND Product = 'NHA'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S4: Minor','NHA','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S4: Minor' 
-		AND Product = 'Pulse Mobile'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S4: Minor','Pulse Mobile','SWM: Software Maintenance', @current_month,0 ;
-	END IF;	
-
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S4: Minor' 
-		AND Product = 'Pulse Patient Portal'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S4: Minor','Pulse Patient Portal','SWM: Software Maintenance', @current_month,0 ;
-	END IF;		
-	IF (SELECT COUNT(1) FROM swm_int_sev_monthly_trends_nonPLSPC 
-		WHERE `Severity` = 'S4: Minor' 
-		AND Product = 'Secure Connect'
-		AND IssueType = 'SWM: Software Maintenance'
-		AND MY = @current_month) = 0 THEN
-		INSERT INTO swm_int_sev_monthly_trends_nonPLSPC
-		SELECT 'S4: Minor','Secure Connect','SWM: Software Maintenance', @current_month,0;
-	END IF;	
-
-	
 	UPDATE swm_int_sev_monthly_trends_nonPLSPC tt
 	INNER JOIN temp_swm_int_sev_monthly_trends_nonPLSPC tmp
 		ON tmp.Severity = tt.Severity

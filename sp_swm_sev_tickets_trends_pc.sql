@@ -58,7 +58,27 @@ BEGIN
 		GROUP BY Severity
 		) t
 	GROUP BY Severity;		
+
+	IF (SELECT COUNT(1) FROM temp_swm_sev_monthly_trends_pc WHERE `Severity` = 'S1: Showstopper' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_sev_monthly_trends_pc
+		SELECT 'S1: Showstopper',@current_month,0;
+	END IF;
+
+	IF (SELECT COUNT(1) FROM temp_swm_sev_monthly_trends_pc WHERE `Severity` = 'S2: Critical' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_sev_monthly_trends_pc
+		SELECT 'S2: Critical',@current_month,0;
+	END IF;	
+
+	IF (SELECT COUNT(1) FROM temp_swm_sev_monthly_trends_pc WHERE `Severity` = 'S3: Important' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_sev_monthly_trends_pc
+		SELECT 'S3: Important',@current_month,0;
+	END IF;	
 	
+	IF (SELECT COUNT(1) FROM temp_swm_sev_monthly_trends_pc WHERE `Severity` = 'S4: Minor' AND MY = @current_month) = 0 THEN
+		INSERT INTO temp_swm_sev_monthly_trends_pc
+		SELECT 'S4: Minor',@current_month,0;
+	END IF;	
+		
 	INSERT INTO swm_sev_monthly_trends_pc
 	SELECT *
 	FROM temp_swm_sev_monthly_trends_pc tmp
