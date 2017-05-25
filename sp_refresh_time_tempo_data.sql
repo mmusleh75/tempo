@@ -236,7 +236,14 @@ BEGIN
 	AND `Work Date` >= '2017-01-01'
 	AND `Project Key` = 'IN'
 	AND `Issue Number` = 5;
-
+	
+	-- Start ONC2015 Tempo collection
+	CALL jiraanalysis.sp_refresh_time_tempo_data_ONC2015();
+		
+	INSERT INTO jiraanalysis.tmp_tempo_data
+	SELECT * FROM jiraanalysis.tmp_tempo_dataONC2015;
+	-- End ONC2015 Tempo collection
+	
 	DROP TABLE IF EXISTS jiraanalysis.tempo_data_no_sprint;
 	
 	RENAME TABLE jiraanalysis.tmp_tempo_data TO jiraanalysis.tempo_data_no_sprint;

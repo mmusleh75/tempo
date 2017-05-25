@@ -36,6 +36,10 @@ BEGIN
 	CALL sp_automation();
 	
 	CALL sp_new_fea_enh();
+	
+	CALL sp_cs_time_percentage();
+	
+	CALL sp_data_migrations();
 
 END$$
 

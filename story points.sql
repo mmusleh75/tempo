@@ -1,7 +1,11 @@
 
 DROP TABLE IF EXISTS jiraanalysis.story_points_tmp;
 CREATE TABLE jiraanalysis.story_points_tmp
-SELECT p.id AS project_id, j.id AS jira_id, j.issuenum AS issue_key, p.pname, cf.numbervalue
+SELECT p.id AS ProjectID
+,j.id AS JiraID
+,j.issuenum AS IssueKey
+,p.pname AS ProjectName
+,cf.numbervalue AS StoryPoints
 FROM jiradb.jiraissue j
 INNER JOIN jiradb.customfieldvalue cf
 	ON cf.issue = j.id
@@ -10,9 +14,16 @@ INNER JOIN jiradb.project p
 	ON j.project = p.id 
 ;
 
+-- select * from jiradb.customfield where id = 10002;
+
 DROP TABLE IF EXISTS jiraanalysis.sprints_tmp;
 CREATE TABLE jiraanalysis.sprints_tmp
-SELECT p.id AS project_id, j.id AS jira_id, j.issuenum, j.issuenum AS issue_key, p.pkey, p.pname, s.name
+SELECT p.id AS ProjectID
+,j.id AS JiraID
+,j.issuenum AS IssueKey
+,p.pkey AS ProjectKey
+,p.pname AS ProjectName
+,s.name AS SprintName
 FROM jiradb.jiraissue j
 INNER JOIN jiradb.customfieldvalue cf
 	ON cf.issue = j.id
@@ -23,16 +34,31 @@ INNER JOIN jiradb.project p
 	ON j.project = p.id ;
 
 
-SELECT s.pkey AS `Project Key`
-	,p.pname AS `Project`
-	,s.name AS `Sprint`
-	,SUM(p.numbervalue) AS `Story Point`
+-- select * from jiradb.customfield where id = 10005;
+
+
+SELECT s.ProjectKey
+	,p.ProjectName
+	,s.SprintName
+	,SUM(p.StoryPoints) AS StoryPoints
 FROM jiraanalysis.story_points_tmp p
 INNER JOIN jiraanalysis.sprints_tmp s
-	ON s.project_id = p.project_id
-	AND s.jira_id = p.jira_id
-WHERE s.name LIKE 'PC%'
-GROUP BY s.pkey, p.pname, s.name;
+	ON s.ProjectID = p.ProjectID
+	AND s.JiraID = p.JiraID
+WHERE s.SprintName LIKE 'PCld-17%'
+GROUP BY s.ProjectKey, p.ProjectName, s.SprintName;
+
+SELECT s.ProjectKey
+	,p.IssueKey
+	,p.StoryPoints
+	,s.*
+FROM jiraanalysis.story_points_tmp p
+INNER JOIN jiraanalysis.sprints_tmp s
+	ON s.ProjectID = p.ProjectID
+	AND s.JiraID = p.JiraID
+WHERE s.IssueKey = '10516'
+s.SprintName LIKE 'PCld-17-02'
+;
 	
 SELECT * FROM jiradb.AO_60DB71_SPRINT WHERE NAME = 'PCld-17-06';
 -- start: 1488997582254

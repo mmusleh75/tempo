@@ -19,7 +19,7 @@ BEGIN
 		FROM jiraanalysis.tempo_data_no_sprint td
 		WHERE td.`Username` = atd.username
 		AND td.`Work Day` = atd.work_day)
-	AND atd.work_day <= NOW()
+	AND atd.work_day >= '2017-01-01'
 	AND atd.day_name NOT IN ('Sat','Sun');
 	
 	ALTER TABLE jiraanalysis.tempo_exceptions_lt8hrs ADD COLUMN `Work Year` INT;

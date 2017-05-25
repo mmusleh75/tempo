@@ -72,7 +72,7 @@ BEGIN
 	WHERE 
 		(jira.PROJECT IN (10735)	#10735: Product Technical Operations
 		OR
-		jira.assignee IN ('pmoore', 'gwilliams', 'mwills', 'rwhipple', 'mmusleh','spatton')
+		jira.assignee IN ('pmoore', 'gwilliams', 'mwills', 'rwhipple', 'mmusleh','spatton', 'ssayyad')
 		)
 
 	#and jira.issuenum = '419'
