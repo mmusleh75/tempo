@@ -63,6 +63,24 @@ BEGIN
 	,0 AS `LT8Hrs`
 	,0000.00 AS `Days Lag`
 #	,l.label
+	,(SELECT GROUP_CONCAT(pv.vname)
+	FROM jiradb.nodeassociation na
+	INNER JOIN jiradb.jiraissue j
+		ON j.id = na.source_node_id
+	INNER JOIN jiradb.projectversion pv
+		ON pv.id = na.sink_node_id
+	WHERE j.id = ji.id
+	AND na.association_type = 'IssueVersion'
+	GROUP BY j.id) AS AffectsVersion
+	,(SELECT GROUP_CONCAT(pv.vname)
+	FROM jiradb.nodeassociation na
+	INNER JOIN jiradb.jiraissue j
+		ON j.id = na.source_node_id
+	INNER JOIN jiradb.projectversion pv
+		ON pv.id = na.sink_node_id
+	WHERE j.id = ji.id
+	AND na.association_type = 'IssueFixVersion'
+	GROUP BY j.id) AS FixedVersion
 	FROM jiradb.worklog wl
 	INNER JOIN jiradb.jiraissue ji
 		ON ji.id = wl.issueid
