@@ -40,6 +40,8 @@ BEGIN
 	CALL sp_cs_time_percentage();
 	
 	CALL sp_data_migrations();
+	
+	CALL sp_refresh_RCM_time_tempo_data();
 
 END$$
 

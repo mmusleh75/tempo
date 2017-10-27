@@ -1,6 +1,6 @@
 /*
 Run this in the beginning of each year
-CALL sp_create_tempo_dates('yyyy-01-01','yyyy-12-31');
+CALL sp_create_tempo_dates('2017-01-01','2017-12-31');
 */
 DELIMITER $$
 
