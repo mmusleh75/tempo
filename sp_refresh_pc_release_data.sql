@@ -58,7 +58,7 @@ BEGIN
 	INNER JOIN `jiraanalysis`.themes t
 		ON t.name = l.label
 	WHERE cf.id = 10001 AND l.issue = jp.id LIMIT 1) AS `Theme Description`
-	,'xxxxxxxxxxxxxxxxxxxxx' AS `Sprint`
+	,NULL AS `ClosedDate`
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `Issue Key`
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `EPIC Key`
 	,0 AS `LT8Hrs`
@@ -99,6 +99,28 @@ BEGIN
 	WHERE p.pkey = 'VTEN'
 	;
 
+	DROP TABLE IF EXISTS jiraanalysis.tmp_vten_closed;
+	
+	CREATE TABLE jiraanalysis.tmp_vten_closed
+	SELECT j.issuenum AS JiraID
+	,MAX(cg.CREATED) ClosedDate
+	FROM jiradb.changeitem ci
+	INNER JOIN jiradb.changegroup cg
+		ON ci.groupid = cg.ID
+	INNER JOIN jiradb.jiraissue j 
+		ON j.id = cg.issueid
+	WHERE j.project = 10701
+	AND ci.field = 'status'
+	AND ci.NEWSTRING = 'Closed'
+	GROUP BY j.issuenum
+	;
+	
+	CREATE INDEX JiraID_index ON jiraanalysis.tmp_vten_closed (`JiraID`);	
+
+	UPDATE jiraanalysis.tmp_vten_closed c
+	INNER JOIN jiraanalysis.tmp_pc_release_data pc
+		ON pc.`Issue Number` = c.JiraID
+	SET pc.ClosedDate = c.ClosedDate;
 	
 	UPDATE jiraanalysis.tmp_pc_release_data
 	SET bugcategory = 'Not Assigned'

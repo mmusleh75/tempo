@@ -11,7 +11,8 @@ BEGIN
 	
 	CREATE TABLE jiraanalysis.tmp_tempo_dataONC2015
 	SELECT DISTINCT 
-	ji.issuenum AS `Issue Number`
+	ji.id AS JIRAID
+	,ji.issuenum AS `Issue Number`
 	,ji.summary AS `Issue summary`	
 	,(wl.timeworked/60/60) AS `Hours`	
 	,wl.created AS `Created Date`
@@ -41,9 +42,9 @@ BEGIN
 	GROUP BY issue) AS BUGCategory	
 --	,pv.vname AS `Fix Version` # multiple fix version per ticket generated dups in logged hrs
 --	,c.cname AS `Component` # multiple components per ticket generated dups in logged hrs
-	,stm.team AS `Sprint Team`
+	,IFNULL(stm.team,'No Team') AS `Sprint Team`
 	,(SELECT cf.numbervalue FROM jiradb.customfieldvalue cf WHERE cf.customfield = 10002 AND cf.issue = ji.id) AS `Story Points`	
-	,d.department AS `Department`
+	,IFNULL(d.department,'No Department') AS `Department`
 	,d.Contractor
 	,pp.pkey AS `Epic Project Key`
 	,jp.issuenum AS `Epic Ticket`	
@@ -62,7 +63,7 @@ BEGIN
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `EPIC Key`
 	,0 AS `LT8Hrs`
 	,0000.00 AS `Days Lag`
-#	,l.label
+	,'No' AS DataEngineer
 	,(SELECT GROUP_CONCAT(pv.vname)
 	FROM jiradb.nodeassociation na
 	INNER JOIN jiradb.jiraissue j
@@ -184,7 +185,7 @@ BEGIN
 
 	CREATE INDEX Username_index ON jiraanalysis.tmp_tempo_dataONC2015 (`Username`);
 	CREATE INDEX WordDay_index ON jiraanalysis.tmp_tempo_dataONC2015 (`Work Day`);
-	
+/*	
 	DROP TABLE IF EXISTS jiraanalysis.LT8Hrs;
 	CREATE TABLE jiraanalysis.LT8Hrs
 	SELECT `Username`, `Work Day`
@@ -200,7 +201,7 @@ BEGIN
 		ON h.`Username` = d.`Username`
 		AND h.`Work Day` = d.`Work Day`
 	SET `LT8Hrs` = 1;
-	
+	*/
 	UPDATE jiraanalysis.tmp_tempo_dataONC2015
 	SET bugcategory = 'Not Assigned'
 	WHERE bugcategory IS NULL;

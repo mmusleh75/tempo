@@ -11,7 +11,8 @@ BEGIN
 	
 	CREATE TABLE jiraanalysis.tmp_tempo_data
 	SELECT DISTINCT 
-	ji.issuenum AS `Issue Number`
+	ji.id AS JIRAID
+	,ji.issuenum AS `Issue Number`
 	,ji.summary AS `Issue summary`	
 	,(wl.timeworked/60/60) AS `Hours`	
 	,wl.created AS `Created Date`
@@ -41,9 +42,9 @@ BEGIN
 	GROUP BY issue) AS BUGCategory	
 --	,pv.vname AS `Fix Version` # multiple fix version per ticket generated dups in logged hrs
 --	,c.cname AS `Component` # multiple components per ticket generated dups in logged hrs
-	,stm.team AS `Sprint Team`
+	,IFNULL(stm.team,'No Team') AS `Sprint Team`
 	,(SELECT cf.numbervalue FROM jiradb.customfieldvalue cf WHERE cf.customfield = 10002 AND cf.issue = ji.id) AS `Story Points`	
-	,d.department AS `Department`
+	,IFNULL(d.department,'No Department') AS `Department`
 	,d.Contractor
 	,pp.pkey AS `Epic Project Key`
 	,jp.issuenum AS `Epic Ticket`	
@@ -62,7 +63,7 @@ BEGIN
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `EPIC Key`
 	,0 AS `LT8Hrs`
 	,0000.00 AS `Days Lag`
-#	,l.label
+	,' No' AS DataEngineer
 	,(SELECT GROUP_CONCAT(pv.vname)
 	FROM jiradb.nodeassociation na
 	INNER JOIN jiradb.jiraissue j
@@ -158,34 +159,6 @@ BEGIN
 	WHERE Username IN ('tmcdermott')
 	AND `Work Date` >= '2017-02-20' -- DO NOT CHANGE THE YEAR
 	;	
-/*
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-01' WHERE `Work Date` BETWEEN '2015-12-31 00:00:00' AND '2016-01-13 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-02' WHERE `Work Date` BETWEEN '2016-01-14 00:00:00' AND '2016-01-27 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-03' WHERE `Work Date` BETWEEN '2016-01-28 00:00:00' AND '2016-02-10 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-04' WHERE `Work Date` BETWEEN '2016-02-11 00:00:00' AND '2016-02-24 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-05' WHERE `Work Date` BETWEEN '2016-02-25 00:00:00' AND '2016-03-09 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-06' WHERE `Work Date` BETWEEN '2016-03-10 00:00:00' AND '2016-03-23 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-07' WHERE `Work Date` BETWEEN '2016-03-24 00:00:00' AND '2016-04-06 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-08' WHERE `Work Date` BETWEEN '2016-04-07 00:00:00' AND '2016-04-20 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-09' WHERE `Work Date` BETWEEN '2016-04-21 00:00:00' AND '2016-05-04 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-10' WHERE `Work Date` BETWEEN '2016-05-05 00:00:00' AND '2016-05-18 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-11' WHERE `Work Date` BETWEEN '2016-05-19 00:00:00' AND '2016-06-01 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-12' WHERE `Work Date` BETWEEN '2016-06-02 00:00:00' AND '2016-06-15 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-13' WHERE `Work Date` BETWEEN '2016-06-16 00:00:00' AND '2016-06-29 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-14' WHERE `Work Date` BETWEEN '2016-06-30 00:00:00' AND '2016-07-13 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-15' WHERE `Work Date` BETWEEN '2016-07-14 00:00:00' AND '2016-07-27 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-16' WHERE `Work Date` BETWEEN '2016-07-28 00:00:00' AND '2016-08-10 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-17' WHERE `Work Date` BETWEEN '2016-08-11 00:00:00' AND '2016-08-24 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-18' WHERE `Work Date` BETWEEN '2016-08-25 00:00:00' AND '2016-09-07 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-19' WHERE `Work Date` BETWEEN '2016-09-08 00:00:00' AND '2016-09-21 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-20' WHERE `Work Date` BETWEEN '2016-09-22 00:00:00' AND '2016-10-05 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-21' WHERE `Work Date` BETWEEN '2016-10-06 00:00:00' AND '2016-10-19 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-22' WHERE `Work Date` BETWEEN '2016-10-20 00:00:00' AND '2016-11-02 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-23' WHERE `Work Date` BETWEEN '2016-11-03 00:00:00' AND '2016-11-16 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-24' WHERE `Work Date` BETWEEN '2016-11-17 00:00:00' AND '2016-11-30 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-25' WHERE `Work Date` BETWEEN '2016-12-01 00:00:00' AND '2016-12-14 23:59:59';
-	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '16-26' WHERE `Work Date` BETWEEN '2016-12-15 00:00:00' AND '2016-12-28 23:59:59';
-*/
 
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-01' WHERE `Work Date` BETWEEN '2016-12-29 00:00:00' AND '2017-01-11 23:59:59';
 	UPDATE jiraanalysis.tmp_tempo_data SET sprint = '17-02' WHERE `Work Date` BETWEEN '2017-01-12 00:00:00' AND '2017-01-25 23:59:59';
@@ -260,17 +233,32 @@ BEGIN
 	AND `Project Key` = 'IN'
 	AND `Issue Number` = 5;
 	
+	-- Set Data Engineer Flag
+	UPDATE jiraanalysis.tmp_tempo_data
+	SET DataEngineer = 'Yes'
+	WHERE `Username` IN ('dpeterson','mwills','aahmed','ppatil');
+	
+	UPDATE jiraanalysis.tmp_tempo_data
+	SET DataEngineer = TRIM(DataEngineer);
+	
 	-- Start ONC2015 Tempo collection
 	CALL jiraanalysis.sp_refresh_time_tempo_data_ONC2015();
 		
 	INSERT INTO jiraanalysis.tmp_tempo_data
 	SELECT * FROM jiraanalysis.tmp_tempo_dataONC2015;
 	-- End ONC2015 Tempo collection
-	
+
 	DROP TABLE IF EXISTS jiraanalysis.tempo_data_no_sprint;
 	
 	RENAME TABLE jiraanalysis.tmp_tempo_data TO jiraanalysis.tempo_data_no_sprint;
-	
+/*
+	drop table if exists jiraanalysis.tempo_planned_time;
+	create table jiraanalysis.tempo_planned_time
+	SELECT pl.plan_item_id AS JIRAID, (pl.commitment*8) AS PlannedHours, pl.created_by AS PlannedBy, pl.start_time AS PlannedDate
+	FROM jiradb.AO_2D3BEA_PLAN_ALLOCATION pl
+	WHERE pl.plan_item_type = 'ISSUE';
+	*/
+
     END$$
 
 DELIMITER ;
