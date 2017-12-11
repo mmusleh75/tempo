@@ -59,6 +59,7 @@ BEGIN
 		ON t.name = l.label
 	WHERE cf.id = 10001 AND l.issue = jp.id LIMIT 1) AS `Theme Description`
 	,NULL AS `ClosedDate`
+	,NULL AS Sprint
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `Issue Key`
 	,'xxxxxxxxxxxxxxxxxxxxx' AS `EPIC Key`
 	,0 AS `LT8Hrs`
@@ -98,7 +99,7 @@ BEGIN
 */
 	WHERE p.pkey = 'VTEN'
 	;
-
+/*
 	DROP TABLE IF EXISTS jiraanalysis.tmp_vten_closed;
 	
 	CREATE TABLE jiraanalysis.tmp_vten_closed
@@ -121,6 +122,7 @@ BEGIN
 	INNER JOIN jiraanalysis.tmp_pc_release_data pc
 		ON pc.`Issue Number` = c.JiraID
 	SET pc.ClosedDate = c.ClosedDate;
+*/
 	
 	UPDATE jiraanalysis.tmp_pc_release_data
 	SET bugcategory = 'Not Assigned'
@@ -129,7 +131,7 @@ BEGIN
 	UPDATE jiraanalysis.tmp_pc_release_data
 	SET bugcategory = 'Not Assigned'
 	WHERE TRIM(bugcategory) = '';
-
+	
 	DROP TABLE IF EXISTS jiraanalysis.pc_release_data_2017;
 	
 	RENAME TABLE jiraanalysis.tmp_pc_release_data TO jiraanalysis.pc_release_data_2017;

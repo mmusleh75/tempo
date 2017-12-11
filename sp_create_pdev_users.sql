@@ -36,6 +36,9 @@ BEGIN
 	AND Contractor IS NULL
 	AND `Sprint Team` IS NULL;
 
+	DELETE FROM jiraanalysis.tmp_tempo_users
+	WHERE Department = 'N/A';
+	
 	CREATE INDEX Username_index ON jiraanalysis.tmp_tempo_users (`Username`);
     END$$
 

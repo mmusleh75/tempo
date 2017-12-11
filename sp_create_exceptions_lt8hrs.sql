@@ -49,15 +49,6 @@ BEGIN
 	-- remove Sat & Sun
 	DELETE FROM jiraanalysis.tempo_exceptions_lt8hrs WHERE day_name IN ('Sat','Sun');
 	
-	-- cleanup us holidays
-	DELETE FROM jiraanalysis.tempo_exceptions_lt8hrs 
-	WHERE work_day IN ('2016-01-01','2016-05-30','2016-07-04','2016-09-05','2016-11-24','2016-11-25','2016-12-25');
-
-	-- cleanup canada holidays
-	DELETE FROM jiraanalysis.tempo_exceptions_lt8hrs 
-	WHERE work_day IN ('2016-01-01','2016-02-15','2016-03-25','2016-05-23','2016-07-01','2016-08-01','2016-09-05','2016-10-10','2016-12-26','2016-12-27');
-	
-	
 	-- remove Greg Gallardo's entries
 	DELETE FROM jiraanalysis.tempo_exceptions_lt8hrs 
 	WHERE username = 'ggallardo' 

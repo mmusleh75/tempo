@@ -19,6 +19,8 @@ BEGIN
 	FROM jiraanalysis.tmp_tempo_users;
 
 	CALL jiraanalysis.sp_create_pdev_users(); -- creates list of PDEV users
+	
+#	select '|',_init_date,_end_date;
 
 	DROP TABLE IF EXISTS jiraanalysis.annual_tempo_dates;
 	CREATE TABLE jiraanalysis.annual_tempo_dates (username VARCHAR(128), work_day DATE, day_name VARCHAR(32));
@@ -50,13 +52,15 @@ BEGIN
 	
 	DELETE FROM jiraanalysis.annual_tempo_dates 
 	WHERE work_day >= DATE_FORMAT(NOW(), '%Y-%m-%d');
-	
-	-- remove Greg Gallardo's entries
-	DELETE FROM jiraanalysis.annual_tempo_dates 
-	WHERE username = 'ggallardo' 
-	AND work_day >= '2016-02-01';
 
-	CALL jiraanalysis.sp_create_exceptions_lt8hrs();
+	DELETE t.*
+	FROM jiraanalysis.annual_tempo_dates t
+	INNER JOIN jiraanalysis.non_tempo_users n
+		ON n.username = t.username
+		AND t.work_day < n.join_date;	
+	
+### uncomment this later
+####	CALL jiraanalysis.sp_create_exceptions_lt8hrs();
 	
     END$$
 

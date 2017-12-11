@@ -34,8 +34,8 @@ BEGIN
 	-- select * from jiraanalysis.tmp_non_pto_time
 
 	-- Time spent on PLS
-	DROP TABLE IF EXISTS jiraanalysis.tmp_pls_time;
-	CREATE TABLE jiraanalysis.tmp_pls_time
+	DROP TABLE IF EXISTS jiraanalysis._tmp_pls_time;
+	CREATE TABLE jiraanalysis._tmp_pls_time
 	SELECT t.Username, t.`Full name` AS FullName, SUM(t.Hours) AS Total
 	FROM jiraanalysis.tempo_data_no_sprint t
 	WHERE t.Department = 'TechOps'
@@ -45,14 +45,14 @@ BEGIN
 	GROUP BY t.username, t.`Full name`
 	;
 
-	-- select * from jiraanalysis.tmp_pls_time
+	-- select * from jiraanalysis._tmp_pls_time
 	DROP TABLE IF EXISTS jiraanalysis.cs_time_percentage;
 	CREATE TABLE jiraanalysis.cs_time_percentage
 	SELECT cs.Username, cs.FullName, cs.Total AS CSTime, pto.Total AS nonPTOTime, IFNULL(pls.Total,0) AS PLSTime
 	FROM jiraanalysis.tmp_cs_time cs
 	INNER JOIN jiraanalysis.tmp_non_pto_time pto
 		ON pto.username = cs.username
-	LEFT JOIN jiraanalysis.tmp_pls_time pls
+	LEFT JOIN jiraanalysis._tmp_pls_time pls
 		ON pls.username = cs.username
 	;
 
