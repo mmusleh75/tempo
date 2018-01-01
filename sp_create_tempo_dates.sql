@@ -23,8 +23,10 @@ BEGIN
 #	select '|',_init_date,_end_date;
 
 	DROP TABLE IF EXISTS jiraanalysis.annual_tempo_dates;
+	
 	CREATE TABLE jiraanalysis.annual_tempo_dates (username VARCHAR(128), work_day DATE, day_name VARCHAR(32));
-	CREATE INDEX username_index ON jiraanalysis.annual_tempo_dates (`username`);
+	
+	CREATE INDEX username_index ON jiraanalysis.annual_tempo_dates (`username`);	
 	CREATE INDEX work_day_index ON jiraanalysis.annual_tempo_dates (`work_day`);
 	
 	OPEN _records;

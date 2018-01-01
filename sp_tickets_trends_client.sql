@@ -42,6 +42,8 @@ BEGIN
 	CALL sp_data_migrations();
 	
 	CALL sp_refresh_RCM_time_tempo_data();
+	
+#	CALL sp_refresh_annual_dates_client();
 
 END$$
 
